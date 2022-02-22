@@ -1,3 +1,0 @@
- #index:
-   # path: /blog
-    #controller: App\Controller\BlogController::show
