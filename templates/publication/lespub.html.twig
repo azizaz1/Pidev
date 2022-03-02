@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+        <section class="probootstrap_section bg-light">
+      <div class="container">
+        <div class="row text-center mb-5 probootstrap-animate">
+          <div class="col-md-12">
+            <h2 class="display-4 border-bottom probootstrap-section-heading">Publications</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+
+           
+        {% for publication in publications %}
+         <div class="media probootstrap-media d-flex align-items-stretch mb-4 probootstrap-animate">
+              <center><img class="probootstrap-media-image" src={{ asset('picture/' ~ publication.image) }}>
+              </img></center>
+              <div class="media-body">
+                <h5 class="mb-3">{{ publication.title }}</h5>
+                <p>{{ publication.content }} </p>
+                <br>
+                 <a href="{{ path('publication_show', {'id': publication.id}) }}">show</a></br>
+                 <a href="{{ path('publication_edit', {'id': publication.id}) }}">edit</a>
+                 <br><a href="{{ path('comment_new', {'id': publication.id}) }}">Add comment</a></br>
+              </div>
+        </div>
+           
+        {% endfor %}
+</div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+    <a href="{{ path('publication_new') }}">Create new</a>
+{% endblock %}
