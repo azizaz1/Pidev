@@ -1,0 +1,109 @@
+
+
+<!DOCTYPE html>
+ <lang="en">
+      <!-- 
+    More Templates Visit ==> ProBootstrap.com
+    Free Template by ProBootstrap.com under the License Creative Commons 3.0 ==> (probootstrap.com/license)
+
+    IMPORTANT: You can do whatever you want with this template but you need to keep the footer link back to ProBootstrap.com
+    -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>Places &mdash; Free HTML5 Bootstrap 4 Theme by ProBootstrap.com</title>
+		<meta name="description" content="Free Bootstrap 4 Theme by ProBootstrap.com">
+		<meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+    
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700" rel="stylesheet">
+
+		<link rel="stylesheet" href="front-office/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="front-office/css/animate.css">
+    <link rel="stylesheet" href="front-office/fonts/ionicons/css/ionicons.min.css">
+    
+    <link rel="stylesheet" href="front-office/css/owl.carousel.min.css">
+    
+    <link rel="stylesheet" href="front-office/fonts/flaticon/font/flaticon.css">
+
+    <link rel="stylesheet" href="front-office/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="front-office/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="front-office/css/select2.css">
+    
+
+    <link rel="stylesheet" href="front-office/css/helpers.css">
+    <link rel="stylesheet" href="front-office/css/style.css">
+<head>
+    <link rel="stylesheet" href="events/test.css">
+</head>
+	
+
+<section>
+    <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="test1">Getaway</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-menu" aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span><i class="ion-navicon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="probootstrap-menu">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ path('events1') }}">Evénements</a></li>
+            <li class="nav-item"><a class="nav-link" href="services.html">Shop</a></li>
+            <li class="nav-item"><a class="nav-link" href="travel.html">Forum</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <p><a href="{{ path('events1') }}">Trier Par prix</a></p>
+
+</div>
+    </nav>
+
+    </html>
+
+
+
+        </body>
+    </section>
+
+
+{% block body %}
+
+   
+
+
+{% for events in events %}
+
+    <div class="snip1265">
+    
+        <div class="plan">
+          <header><i class="ion-ios-navigate-outline"></i>
+            <a href="img/gallery/gallery-1.jpg" ></a>
+            <h4 class="plan-title">
+              {{ events.idevent }}-{{ events.nom }}
+            </h4>
+            <div class="plan-cost"><span class="plan-price">{{ events.price }}DT</span><span class="plan-type"></span></div>
+          </header>
+          <ul class="plan-features">
+            <li>Place:{{ events.place }}<i class="ion-ios-navigate-outline"></i>
+            </li>
+            <li>{{ events.getDate()|date('d-m-Y ') }}
+            </li>
+            <li>festival
+            </li>
+            <li>
+            </li>
+            <li>
+            </li>
+            
+          </ul>
+          <div class="plan-select"><a href="{{ path('add_participation') }}">Réserver</a></div>
+        </div>
+        </div>
+        </body>
+
+        {% endfor %}
+
+      {% endblock %}
