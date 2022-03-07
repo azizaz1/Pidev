@@ -1,0 +1,52 @@
+{% extends 'base-back.html.twig' %}
+
+{% block body %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.2/main.min.js" integrity="sha256-YK3r7IQuHVY5YtEUbGuFMcwtIYCRtRKpZyMej0emzBc=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.2/main.min.css" integrity="sha256-lQnxfLYgySmY6nHM7LkVqcS2RdJvFUV2p6FHg04SZN4=" crossorigin="anonymous">
+
+
+<div id="calendrier">
+
+</div>
+
+
+
+
+{% endblock %}
+
+
+{% block stylesheet %}
+    <style>
+
+        #calendrier{
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+ window.onload= () => {
+     let calendarElt=document.querySelector("#calendrier")
+     let calendar =new FullCalendar.Calendar(calendarElt,{
+         initialView:'dayGridMonth'
+         }
+     )
+     calendar.render()
+ }
+
+
+
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}
