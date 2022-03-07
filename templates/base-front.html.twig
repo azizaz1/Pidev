@@ -14,30 +14,30 @@
 		<meta name="description" content="Free Bootstrap 4 Theme by ProBootstrap.com">
 		<meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
     
-    {% block css%}
+    {% block stylesheet %}
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700" rel="stylesheet">
 
-		<link rel="stylesheet" href="{{asset('front-office/css/bootstrap/bootstrap.css')}}">
-    <link rel="stylesheet" href="{{asset('front-office/css/animate.css')}}">
-    <link rel="stylesheet" href="{{asset('front-office/fonts/ionicons/css/ionicons.min.css')}}">
+		<link rel="stylesheet" href="{{asset('/front-office/css/bootstrap/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/css/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/fonts/ionicons/css/ionicons.min.css')}}">
     
-    <link rel="stylesheet" href="{{asset('front-office/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/css/owl.carousel.min.css')}}">
     
-    <link rel="stylesheet" href="{{asset('front-office/fonts/flaticon/font/flaticon.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/fonts/flaticon/font/flaticon.css')}}">
 
-    <link rel="stylesheet" href="{{asset('front-office/fonts/fontawesome/css/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{asset('front-office/css/bootstrap-datepicker.css')}}">
-    <link rel="stylesheet" href="{{asset('front-office/css/select2.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/fonts/fontawesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/css/bootstrap-datepicker.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/css/select2.css')}}">
     
 
-    <link rel="stylesheet" href="{{asset('front-office/css/helpers.css')}}">
-    <link rel="stylesheet" href="{{asset('front-office/css/style.css')}}">
-    {% endblock %}
+    <link rel="stylesheet" href="{{asset('/front-office/css/helpers.css')}}">
+    <link rel="stylesheet" href="{{asset('/front-office/css/style.css')}}">
+    
 	</head>
-   
+   {% endblock %}
 	<body>
 
-
+ {% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
       <div class="container">
         <a class="navbar-brand" href="/">getaway</a>
@@ -65,7 +65,7 @@
     <!-- END nav -->
     
 
-    <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('front-office/images/bg_1.jpg');" data-stellar-background-ratio="0.5"  id="section-home">
+    <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('/front-office/images/bg_1.jpg');" data-stellar-background-ratio="0.5"  id="section-home">
       <div class="overlay"></div>
       <div class="container">
         <div class="row align-items-center">
@@ -618,7 +618,7 @@
       </div>
     </section>
     <!-- END section -->
-
+{% endblock %}
     <footer class="probootstrap_section probootstrap-border-top">
       <div class="container">
         <div class="row mb-5">

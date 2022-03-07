@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\SearchFormv;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,11 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Voiture;
 use App\Repository\VoitureRepository;
 use App\Form\VoitureType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use App\Entity\Urlizer;
+use App\Data\SearchData;
+
 
 class VoitureController extends AbstractController
 {
     /**
-     * @Route("/voiture", name="voiture")
+     * @Route("/getaway/voiture", name="voiture")
      */
     public function index(): Response
     {
@@ -24,7 +32,7 @@ class VoitureController extends AbstractController
         ]);
     }
     /**
-     * @Route("/voiture/list", name="listv")
+     * @Route("/getaway/voiture/list", name="listv")
      */
     public function list(): Response
     {
@@ -37,7 +45,7 @@ class VoitureController extends AbstractController
     }
 
     /**
-     * @Route("/voiture/delete/{id}", name="deletev")
+     * @Route("/getaway/voiture/delete/{id}", name="deletev")
      */
     public function delete($id): Response
     {
@@ -50,7 +58,7 @@ class VoitureController extends AbstractController
 
     }
     /**
-     * @Route("/voiture/add", name="addv")
+     * @Route("/getaway/voiture/add", name="addv")
      */
     public function add(Request $request): Response
     {
@@ -59,6 +67,16 @@ class VoitureController extends AbstractController
         $form=$form->handleRequest($request);
         if ($form->isSubmitted())
         {
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['image']->getData();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+            $uploadedFile->move(
+                $destination,
+                $newFilename
+            );
+            $voiture->setImage($newFilename);
             $voiture=$form->getData();
             $em=$this->getDoctrine()->getManager();
             $em->persist($voiture);
@@ -72,7 +90,7 @@ class VoitureController extends AbstractController
         ]);
     }
     /**
-     * @Route("/voiture/update/{id}", name="updatev")
+     * @Route("/getaway/voiture/update/{id}", name="updatev")
      */
     public function update(Request $request,$id): Response
     {
@@ -93,6 +111,36 @@ class VoitureController extends AbstractController
         return $this->render('back-office/voiture/update.html.twig', [
             'formA' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/getaway/voiture", name="voiture")
+     */
+    public function showvoiture(VoitureRepository $rep,Request $request): Response
+    {
+        $data=new SearchData();
+        $data->page=$request->get('page',1);
+        $form =$this->createForm(SearchFormv::class,$data);
+        $form->handleRequest($request);
+        $voiture = $rep->findSearch($data);
+        return $this->render('front-office/voiture.html.twig', [
+            'controller_name' => 'VoitureController',
+            'voiture'=>$voiture,
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/getaway/voiture/detail/{id}", name="detailv")
+     */
+    public function detail($id , Request $request , VoitureRepository $rep): Response
+    {
+
+        $voitures = $rep->find($id);
+        return $this->render('front-office/detail.html.twig', [
+            'voiture' => $voitures,
+
+        ]);
+
     }
 
 }

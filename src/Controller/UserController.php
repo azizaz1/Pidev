@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
+use App\Form\UpdateType;
 use App\Form\LoginType;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
@@ -170,15 +171,25 @@ class UserController extends AbstractController
         ]);
     }
 
+
+
+
+
+    
     /**
      * @Route("/user/profil", name="profil")
      */
-    public function profil(): Response
+   /* public function profil(): Response
     {
         return $this->render('back-office/user/profil.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
+*/
+
+
+
+
 
 
         /**
@@ -205,6 +216,23 @@ class UserController extends AbstractController
     }*/
 
 
+  public function reCaptcha($recaptcha){
+        $secret = "6LeMgLEeAAAAAJzrfBKHahekewph0RaBREkujcsX";
+        $ip = $_SERVER['REMOTE_ADDR'];
+      
+        $postvars = array("secret"=>$secret, "response"=>$recaptcha, "remoteip"=>$ip);
+        $url = "https://www.google.com/recaptcha/api/siteverify";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+        $data = curl_exec($ch);
+        curl_close($ch);
+      
+        return json_decode($data, true);
+      }
+
          /**
      * @Route("/user/login", name="login")
      */
@@ -227,7 +255,11 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userCheck = $repository->findOneBy(['mail' => $user->getMail(), 'mdp' => $user->getMdp()]);
-            if($userCheck)
+            $recaptcha = $_POST['g-recaptcha-response'];
+            $res = $this->reCaptcha($recaptcha);
+
+
+            if($userCheck && $res['success'])
             {
                 if($userCheck->getRole())
                 {
@@ -328,8 +360,11 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $pass = $user->getMdp();
             $hash_pass = md5($pass);
-            $userCheck = $repository->findOneBy(['mail' => $user->getMail(), 'mdp' => $hash_pass]);
-            if($userCheck)
+            $userCheck = $repository->findOneBy(['mail' => $user->getMail(), 'mdp' => $hash_pass, 'enable' => NULL]);
+            $recaptcha = $_POST['g-recaptcha-response'];
+            $res = $this->reCaptcha($recaptcha);
+
+            if($userCheck && $res['success'])
             {
                 if($userCheck->getRole())
                 {
@@ -374,6 +409,46 @@ class UserController extends AbstractController
 
 }
 
+
+     /**
+     * @Route("/user/update" , name="updatePro")
+     */
+    public function updatePro(Request $request,UserRepository $repository)
+    {
+        $rr = $this->session->get('id');
+
+
+        $rep = $this->getDoctrine()->getManager();
+        $user = $rep->getRepository(User::class)->find($rr);
+        $prenom = $user->getPrenom();
+        $nom = $user->getNom();
+        $date_naissance = $user->getDateNaissance();
+        $telephone = $user->getTelephone();
+        $mail = $user->getMail();
+
+        $form=$this->createForm(UpdateType::class,$user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+           
+            $user=$form->getData();
+            $rep->flush();
+            return $this->redirectToRoute('updatePro');
+
+
+    
+
+
+
+
+        }
+        else return $this->render('back-office/user/updatePro.html.twig', [
+                'formA' => $form->createView(),
+                ]);
+
+                
+
+    
+    }
 
 
 

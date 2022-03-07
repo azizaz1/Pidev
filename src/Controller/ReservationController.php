@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Hotel;
-use App\Form\HotelType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Reservation;
-use App\Repository\UserRepository;
 use App\Form\ReservationType;
+use App\Repository\HotelRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
+use App\Repository\ReservationRepository;
 
 class ReservationController extends AbstractController
 {
@@ -24,7 +24,7 @@ class ReservationController extends AbstractController
         ]);
     }
     /**
-     * @Route("/reservation/list", name="listr")
+     * @Route("/getaway/reservation/list", name="listr")
      */
     public function list(): Response
     {
@@ -37,7 +37,7 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reservation/delete/{id}", name="deleter")
+     * @Route("/getaway/reservation/delete/{id}", name="deleter")
      */
     public function delete($id): Response
     {
@@ -50,29 +50,41 @@ class ReservationController extends AbstractController
 
     }
     /**
-     * @Route("/reservation/add", name="addr")
+     * @Route("/getaway/reservation/{id}", name="addr")
      */
-    public function add(Request $request): Response
+    public function add( $id , Request $request , HotelRepository $rep , UserRepository $repository): Response
     {
         $reservation=new Reservation();
+        $hotel = $rep->find($id);
+
+        $user = $repository->find(35);
+        //$nbjr= $request->get('date_fin') - $request->get('date_debut');
+        $nbjr = abs(strtotime($request->get('date_fin')) - strtotime($request->get('date_debut')));
+
+
+        //dump($nbjr);
         $form=$this->createForm(ReservationType::class,$reservation);
         $form=$form->handleRequest($request);
         if ($form->isSubmitted())
         {
-            $hotel=$form->getData();
+
+            $reservation->setHotel($hotel);
+            $reservation->setUser($user);
+            $reservation->setPrixreservation($nbjr * $hotel->getPrix());
+            $reservation=$form->getData();
             $em=$this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
-            return $this->redirectToRoute('listr');
+            return $this->redirectToRoute('hotel');
 
         }
-        return $this->render('back-office/reservation/add.html.twig', [
+        return $this->render('front-office/reservation.html.twig', [
             'formA' => $form->createView(),
-
+            'data' =>$nbjr
         ]);
     }
     /**
-     * @Route("/reservation/update/{id}", name="updater")
+     * @Route("/getaway/reservation/update/{id}", name="updater")
      */
     public function update(Request $request,$id): Response
     {
@@ -94,6 +106,13 @@ class ReservationController extends AbstractController
             'formA' => $form->createView(),
         ]);
     }
-
-
+    /**
+     * @Route("/reservation/calendar", name="calendar")
+     */
+    public function calendar(): Response
+    {
+        return $this->render('back-office/reservation/calendar.html.twig', [
+            'controller_name' => 'ReservationController',
+        ]);
+    }
 }

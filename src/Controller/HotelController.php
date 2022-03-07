@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserType;
+
+use App\Data\SearchData;
+use App\Form\SearchForm;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,20 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Hotel;
 use App\Repository\HotelRepository;
 use App\Form\HotelType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use App\Entity\Urlizer;
+
 
 class HotelController extends AbstractController
 {
+
     /**
-     * @Route("/hotel", name="hotel")
-     */
-    public function index(): Response
-    {
-        return $this->render('hotel/index.html.twig', [
-            'controller_name' => 'HotelController',
-        ]);
-    }
-    /**
-     * @Route("/hotel/list", name="listh")
+     * @Route("/getaway/hotel/list", name="listh")
      */
     public function list(): Response
     {
@@ -37,7 +37,7 @@ class HotelController extends AbstractController
     }
 
     /**
-     * @Route("/hotel/delete/{id}", name="deleteh")
+     * @Route("/getaway/hotel/delete/{id}", name="deleteh")
      */
     public function delete($id): Response
     {
@@ -52,7 +52,7 @@ class HotelController extends AbstractController
 
 
     /**
-     * @Route("/hotel/update/{id}", name="updateh")
+     * @Route("/getaway/hotel/update/{id}", name="updateh")
      */
     public function update(Request $request,$id): Response
     {
@@ -75,7 +75,7 @@ class HotelController extends AbstractController
         ]);
     }
     /**
-     * @Route("/hotel/add", name="addh")
+     * @Route("/getaway/hotel/add", name="addh")
      */
     public function add(Request $request): Response
     {
@@ -84,6 +84,16 @@ class HotelController extends AbstractController
         $form=$form->handleRequest($request);
         if ($form->isSubmitted())
         {
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['img']->getData();
+            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+            $uploadedFile->move(
+                $destination,
+                $newFilename
+            );
+            $hotel->setImg($newFilename);
             $hotel=$form->getData();
             $em=$this->getDoctrine()->getManager();
             $em->persist($hotel);
@@ -96,5 +106,26 @@ class HotelController extends AbstractController
 
         ]);
     }
+    /**
+     * @Route("/getaway/hotel", name="hotel")
+     */
+    public function showhotel(HotelRepository $rep,Request $request ): Response
+    {
+        $data=new SearchData();
+        $data->page=$request->get('page',1);
+        $form =$this->createForm(SearchForm::class,$data);
+        $form->handleRequest($request);
+        $hotel = $rep->findSearch($data);
+
+        return $this->render('front-office/hotel.html.twig', [
+            'controller_name' => 'HotelController',
+            'hotel'=>$hotel,
+            'form'=>$form->createView()
+        ]);
+    }
+
+
+
+
 
 }

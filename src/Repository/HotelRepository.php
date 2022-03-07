@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Hotel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 /**
  * @method Hotel|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +18,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class HotelRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(ManagerRegistry $registry , PaginatorInterface $paginator)  {
         parent::__construct($registry, Hotel::class);
+        $this->paginator =$paginator;
     }
 
     // /**
@@ -47,4 +51,53 @@ class HotelRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * Recuperer les hotels en lien avec une recherche
+     * @return PaginationInterface
+     */
+
+    public function findSearch(SearchData $search):PaginationInterface
+
+    {
+        $query=$this
+            ->createQueryBuilder('h');
+
+
+        if (!empty($search->q)){
+            $query=$query
+                ->andWhere('h.name LIKE :q')
+                ->setParameter('q',"%{$search->q}%");
+        }
+        if (!empty($search->min)){
+            $query=$query
+                ->andWhere('h.prix >= :min')
+                ->setParameter('min',$search->min);
+
+        }
+        if (!empty($search->max)){
+            $query=$query
+                ->andWhere('h.prix <= :max')
+                ->setParameter('max',$search->max);
+
+        }
+        if (!empty($search->promo)){
+            $query=$query
+                ->andWhere('h.promotion =1');
+
+        }
+
+        if (!empty($search->a)){
+            $query=$query
+                ->andWhere('h.adresse LIKE :a')
+                ->setParameter('a',"%{$search->a}%");
+        }
+      $query= $query->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            2
+        );
+
+    }
 }

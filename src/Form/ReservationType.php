@@ -6,7 +6,6 @@ use App\Entity\Reservation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ReservationType extends AbstractType
 {
@@ -15,9 +14,10 @@ class ReservationType extends AbstractType
         $builder
             ->add('date_debut')
             ->add('date_fin')
-            ->add('prix',[
-                'attr'=>['placeholder'=>"Entrez le prix",
-                    'class' => 'form-control']])
+            ->add('prixreservation')
+            ->add('nbrperson')
+            ->add('user')
+            ->add('hotel')
         ;
     }
 

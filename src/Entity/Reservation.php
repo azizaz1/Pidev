@@ -30,7 +30,24 @@ class Reservation
     /**
      * @ORM\Column(type="float")
      */
-    private $prix;
+    private $prixreservation;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbrperson;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Hotel::class, inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $hotel;
 
     public function getId(): ?int
     {
@@ -61,14 +78,50 @@ class Reservation
         return $this;
     }
 
-    public function getPrix(): ?float
+    public function getPrixreservation(): ?float
     {
-        return $this->prix;
+        return $this->prixreservation;
     }
 
-    public function setPrix(float $prix): self
+    public function setPrixreservation(float $prixreservation): self
     {
-        $this->prix = $prix;
+        $this->prixreservation = $prixreservation;
+
+        return $this;
+    }
+
+    public function getNbrperson(): ?int
+    {
+        return $this->nbrperson;
+    }
+
+    public function setNbrperson(int $nbrperson): self
+    {
+        $this->nbrperson = $nbrperson;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getHotel(): ?Hotel
+    {
+        return $this->hotel;
+    }
+
+    public function setHotel(?Hotel $hotel): self
+    {
+        $this->hotel = $hotel;
 
         return $this;
     }
