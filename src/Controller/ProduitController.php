@@ -1,104 +1,99 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\Produit;
-use App\Form\ProduitFormType;
+
+use App\Entity\Reservation;
+use App\Entity\User;
+use App\Form\ReservationType;
+use App\Form\UserType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-use App\Entity\Image;
-use App\Entity\Category;
-use Dompdf\Dompdf;
-use Dompdf\options;
-
-
+use App\Entity\Produit;
+use App\Repository\ProduitRepository;
+use App\Form\ProduitType;
 
 class ProduitController extends AbstractController
 {
-     /**
- * @Route("/produits", name="produits")
- */
-public function produits()
-{
-    
-    $produit = $this->getDoctrine()->getRepository(produit::class)->findAll();
-     
-    return $this->render('produit/produit.html.twig', [
-        "produit" => $produit,
-        
-    ]);
-}
     /**
-     * @Route("/add-produit", name="add_produit")
+     * @Route("/produit", name="produit")
      */
-    public function addProduit(Request $request): Response
+    public function index(): Response
     {
-        $produit = new Produit();
-        $form = $this->createForm(ProduitFormType::class, $produit);
-        $form->handleRequest($request);
-    
-        if($form->isSubmitted() && $form->isValid())
-        {
-            
-
-           $path=$this->getParameter('kernel.project_dir') .'/public/imgs';
-           $produit=$form->getData();
-            
-            $image=$produit->getImage();
-            $file=$image->getFile();
-            $nom = md5(uniqid()). '.'.$file->guessExtension();
-            $file->move($path,$nom);
-            $image->setNom($nom);
-            
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($produit);
-            $entityManager->flush();
-        }
-    
-        return $this->render("produit/produit-form.html.twig", [
-            "form_title" => "Ajouter un produit",
-            "form_produit" => $form->createView(),
+        return $this->render('produit/index.html.twig', [
+            'controller_name' => 'ProduitController',
         ]);
     }
-   
- 
-
-
-/**
- * @Route("/modify-produit/{id}", name="modify_produit")
- */
-public function modifyProduit(Request $request, int $id): Response
-{
-    $entityManager = $this->getDoctrine()->getManager();
-
-    $produit = $entityManager->getRepository(Produit::class)->find($id);
-    $form = $this->createForm(ProduitFormType::class, $produit);
-    $form->handleRequest($request);
-
-    if($form->isSubmitted() && $form->isValid())
+    /**
+     * @Route("/produit/list", name="listp")
+     */
+    public function list(): Response
     {
-        $entityManager->flush();
+        $rep=$this->getDoctrine()->getRepository(Produit::class);
+        $produits=$rep->findAll();
+        return $this->render('back-office/produit/list.html.twig', [
+            'produit' => $produits,
+        ]);
+
     }
 
-    return $this->render("produit/produit-form.html.twig", [
-        "form_title" => "Modifier un produit",
-        "form_produit" => $form->createView(),
-    ]);
-}
-/**
- * @Route("/delete-produit/{id}", name="delete_produit")
- */
-public function deleteProduit(int $id): Response
-{
-    $entityManager = $this->getDoctrine()->getManager();
-    $produit = $entityManager->getRepository(Produit::class)->find($id);
-    $entityManager->remove($produit);
-    $entityManager->flush();
+    /**
+     * @Route("/produit/delete/{id}", name="deletep")
+     */
+    public function delete($id): Response
+    {
+        $rep = $this->getDoctrine()->getRepository(Produit::class);
+        $em = $this->getDoctrine()->getManager();
+        $produit = $rep->find($id);
+        $em->remove($produit);
+        $em->flush();
+        return $this->redirectToRoute('list');
 
-    return $this->redirectToRoute("produits");
-}
+    }
+    /**
+     * @Route("/produit/add", name="addp")
+     */
+    public function add(Request $request): Response
+    {
+        $produit=new Produit();
+        $form=$this->createForm(ProduitType::class,$produit);
+        $form=$form->handleRequest($request);
+        if ($form->isSubmitted())
+        {
+            $produit=$form->getData();
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($produit);
+            $em->flush();
+            return $this->redirectToRoute('listp');
 
+        }
+        return $this->render('back-office/produit/add.html.twig', [
+            'formA' => $form->createView(),
+
+        ]);
+    }
+    /**
+     * @Route("/produit/update/{id}", name="updatep")
+     */
+    public function update(Request $request,$id): Response
+    {
+        $rep=$this->getDoctrine()->getRepository(Produit::class);
+
+        $produit=$rep->find($id);
+        $form=$this->createForm(ProduitType::class,$produit);
+        $form=$form->handleRequest($request);
+        if ($form->isSubmitted())
+        {
+
+            $em=$this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('listp');
+
+        }
+
+        return $this->render('back-office/produit/update.html.twig', [
+            'formA' => $form->createView(),
+        ]);
+    }
 }
