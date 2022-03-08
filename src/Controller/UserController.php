@@ -454,6 +454,96 @@ class UserController extends AbstractController
 
 
 
+    
+     /**
+     * @Route("/enable/{id}", name="enable")
+     */
+    public function enable(MailerInterface $mailer, Request $request,$id): Response
+    {
+        $rep = $this->getDoctrine()->getManager();
+        $user = $rep->getRepository(User::class)->find($id);
+
+        $user->setEnable(NULL);
+        $role = $user->getRole();
+        $rep->flush();
+
+        $email = (new Email())
+        ->from(Address::create('GETAWAY <hayfa.boughoufa@esprit.tn>'))                
+        ->to($user->getMail())
+        ->subject('Your Account Has Been Restored')
+        ->html('
+        <center><h1>Hello '.$user->getPrenom().',</h1></center>
+        <p>Your account has been activated</p>
+  
+        
+        ');
+    $mailer->send($email);
+
+        if($role == 1)
+        return $this->redirectToRoute('listhot');
+        else if($role == 2)
+        return $this->redirectToRoute('listc');
+
+
+    }
+ /**
+     * @Route("/disable/{t}/{id}", name="disable")
+     */
+    public function disable(MailerInterface $mailer, Request $request,$id,$t): Response
+    {
+        $rep = $this->getDoctrine()->getManager();
+        $user = $rep->getRepository(User::class)->find($id);
+        if($t == 't')
+        {
+        $user->setEnable(1);
+        $email = (new Email())
+        ->from(Address::create('GETAWAY <hayfa.boughoufa@esprit.tn>'))                
+        ->to($user->getMail())
+        ->subject('Your Account Has Been Temporarly Disabled')
+        ->html('
+        <center><h1>Hello '.$user->getPrenom().',</h1></center>
+        <p>Your account has been temporarly disabled by your administrator</p>
+  
+        
+        ');
+    $mailer->send($email);
+        }
+
+        else if($t == 'p')
+        {
+        $user->setEnable(2);
+        $email = (new Email())
+        ->from(Address::create('GETAWAY <hayfa.boughoufa@esprit.tn>'))                
+        ->to($user->getMail())
+        ->subject('Your Account Has Been Disabled')
+        ->html('
+        <center><h1>Hello '.$user->getPrenom().',</h1></center>
+        <p>Your account has been disabled by your administrator</p>
+  
+        
+        ');
+    $mailer->send($email);
+        }
+
+        $role = $user->getRole();
+        
+        $rep->flush();
+        if($role == 1)
+        return $this->redirectToRoute('listhot');
+        else if($role == 2)
+        return $this->redirectToRoute('listc');
+
+
+    }
+ 
+
+
+
+
+
+
+
+
 
 
 }

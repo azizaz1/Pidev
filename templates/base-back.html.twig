@@ -23,7 +23,7 @@
  <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
  </div>
  <div class="nk-sidebar-brand">
- <a class="logo-link nk-sidebar-logo"><img class="logo-light logo-img" src="../images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo">
+ <a class="logo-link nk-sidebar-logo"><img class="logo-light logo-img" src="../back-office/images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo">
  <img class="logo-dark logo-img" src="../images/logo-dark.png" srcset="/demo1/images/logo-dark2x.png 2x" alt="logo-dark"></a>
  </div>
  </div>
@@ -100,17 +100,8 @@
  </ul>
  </li>
  <li class="nk-menu-item has-sub">
- <a href="{{ path ('listp') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Produits</span></a>
- <ul class="nk-menu-sub">
- <li class="nk-menu-item">
- <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Tous les produits</span></a>
- </li>
- <li class="nk-menu-item">
- <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter un produit</span></a>
- </li>
- <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier un produit</span></a>
- </li>
- </ul>
+ <a href="{{ path ('produits') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Produits</span></a>
+ 
  </li>
  <li class="nk-menu-item has-sub">
  <a href="{{ path ('liste') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Évènements</span></a>
@@ -135,13 +126,34 @@
  <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Mon Profile</span></a>
  </li>
  <li class="nk-menu-item">
+ 
+
+
+
+
+
+
+
+
+
  <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter un Évènement</span></a>
  </li>
  <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier un Évènement</span></a>
  </li>
  </ul>
  </li>
-
+<li class="nk-menu-item has-sub">
+ <a href="" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Evénement</span></a>
+ <ul class="nk-menu-sub">
+ <li class="nk-menu-item">
+ <a href="{{ path ('events') }}" class="nk-menu-link"><span class="nk-menu-text">Evénement</span></a>
+ </li>
+ <li class="nk-menu-item">
+ <a href="{{ path ('participations') }}" class="nk-menu-link"><span class="nk-menu-text">Participants</span></a>
+ </li>
+ 
+ </ul>
+ </li>
 
 
  </div>
@@ -153,7 +165,7 @@
  <div class="container-fluid">
    <div class="nk-header-wrap">
       <div class="nk-menu-trigger d-xl-none ml-n1"><a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a></div>
-      <div class="nk-header-brand d-xl-none"><a href="../index-2.html" class="logo-link"><img class="logo-light logo-img" src="../images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo"><img class="logo-dark logo-img" src="../images/logo-dark.png" srcset="/demo1/images/logo-dark2x.png 2x" alt="logo-dark"></a></div>
+      <div class="nk-header-brand d-xl-none"><a href="../index-2.html" class="logo-link"><img class="logo-light logo-img" src="../back-office/images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo"><img class="logo-dark logo-img" src="../images/logo-dark.png" srcset="/demo1/images/logo-dark2x.png 2x" alt="logo-dark"></a></div>
       <div class="nk-header-news d-none d-xl-block">
          <div class="nk-news-list">
             <a class="nk-news-item" href="#">
