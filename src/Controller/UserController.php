@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Entity\Notifications;
+use App\Repository\NotificationsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use App\Form\UpdateType;
@@ -112,6 +114,7 @@ class UserController extends AbstractController
        $user=new User();
        $form=$this->createForm(UserType::class,$user);
        $form=$form->handleRequest($request);
+       
        if ($form->isSubmitted())
        {
        $user=$form->getData();
@@ -296,6 +299,7 @@ class UserController extends AbstractController
     public function authc(Request $request): Response
     {
         $user=new User();
+        $notifications = new Notifications();
         $form=$this->createForm(UserType::class,$user);
         $form=$form->handleRequest($request);
         if ($form->isSubmitted())
@@ -307,8 +311,19 @@ class UserController extends AbstractController
         $hash_pass = md5($pass);
         $user->setMdp($hash_pass);
 
+        $name = $user->getPrenom().' '.$user->getNom();
+
+        $notifications->setTitle($name.' has registred.');
+        $notifications->setLink('/user/client');
+        $date = date('d/m/Y - H:i');
+        $notifications->setDate($date);
+        $notifications->setToShow(1);
+
         $em=$this->getDoctrine()->getManager();
         $em->persist($user);
+         $em->flush();
+
+         $em->persist($notifications);
          $em->flush();
          return $this->redirectToRoute('test');
          

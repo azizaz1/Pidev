@@ -10,12 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @UniqueEntity(
- *     fields={"mail"},
- *     message="I think you're already registered!"
- * )
- */
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -26,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class User
 {
+
 
 
 
@@ -93,11 +89,15 @@ class User
      */
     private $reservationvs;
 
+
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
         $this->reservationvs = new ArrayCollection();
     }
+
+
 
 
 
