@@ -18,7 +18,7 @@ class PublicationType extends AbstractType
             ->add('title', TextType::class, array(
                 'label' => 'title ',
                 'attr' => array(
-                    'placeholder' => 'title'
+                    'placeholder' => 'Titre'
                 )
             )
             )
@@ -28,7 +28,7 @@ class PublicationType extends AbstractType
             ->add('content', TextareaType::class, array(
                 'label' => 'content ',
                 'attr' => array(
-                    'placeholder' => 'Your Content'
+                    'placeholder' => 'Ecrire ici ..'
                 )
             )
                 );

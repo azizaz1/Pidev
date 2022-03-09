@@ -6,7 +6,7 @@
       <div class="container">
         <div class="row text-center mb-5 probootstrap-animate">
           <div class="col-md-12">
-            <h2 class="display-4 border-bottom probootstrap-section-heading">comment</h2>
+            <h2 class="display-4 border-bottom probootstrap-section-heading">Commentaires</h2>
           </div>
         </div>
         <div class="row">
@@ -20,7 +20,7 @@
                 <p>{{ Comment.content }} </p>
                 <p>{{  Comment.createdAt | date('d/m/y') }} </p> 
                 <br>
-                  <a href="{{ path('comment_edit', {'id': Comment.id}) }}">Edit</a>
+                  <a href="{{ path('comment_edit', {'id': Comment.id}) }}">Modifier</a>
               </div>
         </div>
            

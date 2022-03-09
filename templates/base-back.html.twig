@@ -39,22 +39,14 @@
 
 
  <li class="nk-menu-item has-sub">
- <a href="{{ path ('listhot') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Hoteliers</span></a>
+ <a href="{{ path ('listhot') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span><span class="nk-menu-text">Hoteliers</span></a>
 
  </li>
 
  <li class="nk-menu-item has-sub">
- <a href="{{ path ('listc') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Clients</span></a>
+ <a href="{{ path ('listc') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span><span class="nk-menu-text">Clients</span></a>
 
  </li>
-
-
-
-{% endif %}
-
-
-
-
 
 
  <li class="nk-menu-item has-sub">
@@ -70,6 +62,9 @@
  </li>
  </ul>
  </li>
+{% endif %}
+
+
 
   <li class="nk-menu-item has-sub">
  <a href="{{ path ('listr') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Réservations</span></a>
@@ -84,6 +79,9 @@
  </li>
  </ul>
  </li>
+
+
+
 {% if app.session.get('role') == '3' %}
 
  <li class="nk-menu-item has-sub">
@@ -104,11 +102,6 @@
  
  </li>
  
-
-
-
-
-
 
  <li class="nk-menu-item has-sub">
  <a href="{{ path ('publication_index') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Publications</span></a>
@@ -134,6 +127,8 @@
  </ul>
  </li>
 {% endif %}
+
+
   <li class="nk-menu-item has-sub">
  <a href="{{ path ('updatePro') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Mon Profile</span></a>
  <ul class="nk-menu-sub">
@@ -323,6 +318,8 @@
                         </div>
                      </div>
                   </div>
+
+                  
 
 
 
@@ -634,7 +631,10 @@ setInterval(function () {
     for (let i=0; i<notifications.length; i++)
     {
        $('.icon-status').addClass('icon-status-info');
-    $('#notifications').append('<div class="nk-notification-item dropdown-inner"><div class="nk-notification-icon"><em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em></div><div class="nk-notification-content"><div class="nk-notification-text">'+notifications[i].title+'</div><div class="nk-notification-time">'+notifications[i].date+'</div></div></div>');
+    $('#notifications').append('<div class="nk-notification-item dropdown-inner"><div class="nk-notification-icon"><em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em></div><div class="nk-notification-content"><div class="nk-notification-text">'
+    +notifications[i].title
+    +'</div><div class="nk-notification-time">'
+    +notifications[i].date+'</div></div></div>');
     }
   });
 }, 30000);

@@ -16,14 +16,14 @@ class CommentType extends AbstractType
             ->add('content', TextareaType::class, array(
                 'label' => 'content ',
                 'attr' => array(
-                    'placeholder' => 'Your Content'
+                    'placeholder' => 'Votre contenu'
                 )
             )
                 )
             ->add('authorName', TextType::class, array(
                 'label' => 'authorName ',
                 'attr' => array(
-                    'placeholder' => 'Your name'
+                    'placeholder' => 'Votre nom'
                 )
             )
             )

@@ -9,13 +9,13 @@
             <h2 class="display-4 border-bottom probootstrap-section-heading">Publications</h2>
           </div>
         </div>
-        <h2>Search A Post !!</h2>
+        <h2>Chercher une publication !!</h2>
 
             <div class="sidebar-search">
 
                 <div class="input-group custom-search-form">
 
-                    <input type="text" id="search" class="form-control" placeholder="Search here">
+                    <input type="text" id="search" class="form-control" placeholder="Chercher ici..">
                 </div>
                 <!-- /input-group -->
             </div>
@@ -84,9 +84,9 @@
                 <h5 class="mb-3">{{ publication.title }}</h5>
                 <p>{{ publication.content }} </p>
                 <br>
-                 <a href="{{ path('publication_show', {'id': publication.id}) }}">show</a></br>
-                 <a href="{{ path('publication_edit', {'id': publication.id}) }}">edit</a>
-                 <br><a href="{{ path('comment_new', {'id': publication.id}) }}">Add comment</a></br>
+                 <a href="{{ path('publication_show', {'id': publication.id}) }}">Afficher</a></br>
+                 <a href="{{ path('publication_edit', {'id': publication.id}) }}">Modifier</a>
+                 <br><a href="{{ path('comment_new', {'id': publication.id}) }}">Ajouter un commentaire</a></br>
               </div>
         </div>
            
@@ -98,9 +98,9 @@
     </section>
     <!-- END section -->
     {% if app.session.get('role') %}
-    <a href="{{ path('publication_new') }}">Create new</a>
+    <a href="{{ path('publication_new') }}">Ajouter une publication</a>
     {% else %}
-    <a href="{{ path('loginc') }}">Create new</a>
+    <a href="{{ path('loginc') }}">Ajouter une publication</a>
     {% endif %}
     <center>{{ knp_pagination_render(publications) }}</center>
 {% endblock %}

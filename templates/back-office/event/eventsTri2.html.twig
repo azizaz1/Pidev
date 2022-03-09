@@ -30,7 +30,7 @@
             <div class="plan-cost"><span class="plan-price">{{ events.price }}DT</span><span class="plan-type"></span></div>
           </header>
           <ul class="plan-features">
-            <li>Place:{{ events.place }}<i class="ion-ios-navigate-outline"></i>
+            <li>Localisation:{{ events.place }}<i class="ion-ios-navigate-outline"></i>
             </li>
             <li>{{ events.getDate()|date('d-m-Y ') }}
             </li>
@@ -42,7 +42,11 @@
             </li>
             
           </ul>
+          {% if app.session.get('role') %}
           <div class="plan-select"><a href="{{ path('add_participation') }}">Réserver</a></div>
+          {% else %}
+          <div class="plan-select"><a href="{{ path('loginc') }}">Réserver</a></div>
+          {% endif %}
         </div>
         </div>
         </body>

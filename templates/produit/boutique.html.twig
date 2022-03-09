@@ -71,11 +71,19 @@
                     <h2>Prix : {{ produit.prix }} €</h2>
                     <img class="w-100" src="{{ asset('imgs/')|imagine_filter('carre')~produit.image.nom}}" alt="Image de {{ produit.nom }}">
                    <hr>
+
+{% if app.session.get('role') %}
                     <a href="{{path("add", {id: produit.id})}}" class="btn btn-success">
                         <i class="bi bi-cart-plus"></i> Ajouter
                          </a>
                         <!-- http://127.0.0.1:5500/index.html?titre=C%27est+bien&comment=Super+avis&note=4 -->
     <form action="" method="post">
+{% else %}
+                    <a href="{{ path('loginc') }}" class="btn btn-success">
+                        <i class="bi bi-cart-plus"></i> Ajouter
+                         </a>
+{% endif %}
+
     <br>
         <div>
             <label for="titre">Titre </label>
@@ -100,7 +108,11 @@
         </div>
         <br>
         <input type="hidden" name="note" id="note" value="0">
+        {% if app.session.get('role') %}
         <button type="submit" class="btn btn-success">Valider</button>
+        {% else %}
+        <a href="{{ path('loginc') }}" class="btn btn-success">Valider</a>
+        {% endif %}
     </form>
 
     <script src="front-office/js/scripts.js"></script>
