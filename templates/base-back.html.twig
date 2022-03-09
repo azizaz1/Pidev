@@ -23,7 +23,7 @@
  <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
  </div>
  <div class="nk-sidebar-brand">
- <a class="logo-link nk-sidebar-logo"><img class="logo-light logo-img" src="../images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo">
+ <a class="logo-link nk-sidebar-logo"><img class="logo-light logo-img" src="../back-office/images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo">
  <img class="logo-dark logo-img" src="../images/logo-dark.png" srcset="/demo1/images/logo-dark2x.png 2x" alt="logo-dark"></a>
  </div>
  </div>
@@ -59,89 +59,61 @@
 
  <li class="nk-menu-item has-sub">
  <a href="{{ path ('listh') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span><span class="nk-menu-text">Hôtels</span></a>
- <ul class="nk-menu-sub">
- <li class="nk-menu-item">
- <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Tous les hôtels</span></a>
- </li>
- <li class="nk-menu-item">
- <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter un hôtel</span></a>
- </li>
- <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier un hôtel</span></a>
- </li>
- </ul>
  </li>
 
   <li class="nk-menu-item has-sub">
  <a href="{{ path ('listr') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Réservations</span></a>
- <ul class="nk-menu-sub">
- <li class="nk-menu-item">
- <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Toutes les réservations</span></a>
- </li>
- <li class="nk-menu-item">
- <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter une réservation</span></a>
- </li>
- <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier une réservation</span></a>
- </li>
- </ul>
- </li>
+  </li>
 {% if app.session.get('role') == '3' %}
 
  <li class="nk-menu-item has-sub">
  <a href="{{ path ('listv') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Voitures</span></a>
- <ul class="nk-menu-sub">
- <li class="nk-menu-item">
- <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Toutes les voitures</span></a>
  </li>
- <li class="nk-menu-item">
- <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter une voiture</span></a>
- </li>
- <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier une voiture</span></a>
- </li>
- </ul>
- </li>
+   <li class="nk-menu-item has-sub">
+      <a href="{{ path ('listrr') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Locations</span></a>
+   </li>
  <li class="nk-menu-item has-sub">
- <a href="{{ path ('listp') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Produits</span></a>
- <ul class="nk-menu-sub">
- <li class="nk-menu-item">
- <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Tous les produits</span></a>
+ <a href="{{ path ('produits') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Produits</span></a>
+ 
  </li>
- <li class="nk-menu-item">
- <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter un produit</span></a>
- </li>
- <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier un produit</span></a>
- </li>
- </ul>
- </li>
+ 
+
+
+
+
+
+
  <li class="nk-menu-item has-sub">
- <a href="{{ path ('liste') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Évènements</span></a>
- <ul class="nk-menu-sub">
- <li class="nk-menu-item">
- <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Tous les Évènements</span></a>
- </li>
- <li class="nk-menu-item">
- <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter un Évènement</span></a>
- </li>
- <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier un Évènement</span></a>
- </li>
- </ul>
+ <a href="{{ path ('publication_index') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Publications</span></a>
+
+  <li class="nk-menu-item has-sub">
+ <a href="/comment/" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Commentaires</span></a>
  </li>
 
+
+
+
+
+<li class="nk-menu-item has-sub">
+ <a href="" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Evénement</span></a>
+ <ul class="nk-menu-sub">
+ <li class="nk-menu-item">
+ <a href="{{ path ('events') }}" class="nk-menu-link"><span class="nk-menu-text">Evénement</span></a>
+ </li>
+ <li class="nk-menu-item">
+ <a href="{{ path ('participations') }}" class="nk-menu-link"><span class="nk-menu-text">Participants</span></a>
+ </li>
+ 
+ </ul>
+ </li>
 {% endif %}
-
- <li class="nk-menu-item has-sub">
+  <li class="nk-menu-item has-sub">
  <a href="{{ path ('updatePro') }}" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span><span class="nk-menu-text">Mon Profile</span></a>
  <ul class="nk-menu-sub">
- <li class="nk-menu-item">
- <a href="bookings.html" class="nk-menu-link"><span class="nk-menu-text">Mon Profile</span></a>
- </li>
- <li class="nk-menu-item">
- <a href="booking-add.html" class="nk-menu-link"><span class="nk-menu-text">Ajouter un Évènement</span></a>
- </li>
- <li class="nk-menu-item"><a href="booking-edit.html" class="nk-menu-link"><span class="nk-menu-text">Modifier un Évènement</span></a>
- </li>
+
+
  </ul>
  </li>
-
 
 
  </div>
@@ -153,7 +125,7 @@
  <div class="container-fluid">
    <div class="nk-header-wrap">
       <div class="nk-menu-trigger d-xl-none ml-n1"><a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a></div>
-      <div class="nk-header-brand d-xl-none"><a href="../index-2.html" class="logo-link"><img class="logo-light logo-img" src="../images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo"><img class="logo-dark logo-img" src="../images/logo-dark.png" srcset="/demo1/images/logo-dark2x.png 2x" alt="logo-dark"></a></div>
+      <div class="nk-header-brand d-xl-none"><a href="../index-2.html" class="logo-link"><img class="logo-light logo-img" src="../back-office/images/logo.png" srcset="/demo1/images/logo2x.png 2x" alt="logo"><img class="logo-dark logo-img" src="../images/logo-dark.png" srcset="/demo1/images/logo-dark2x.png 2x" alt="logo-dark"></a></div>
       <div class="nk-header-news d-none d-xl-block">
          <div class="nk-news-list">
             <a class="nk-news-item" href="#">
@@ -203,54 +175,12 @@
             </li>
             <li class="dropdown notification-dropdown mr-n1">
                <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-toggle="dropdown">
-                  <div class="icon-status icon-status-info"><em class="icon ni ni-bell"></em></div>
+                  <div class="icon-status"><em class="icon ni ni-bell"></em></div>
                </a>
                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right dropdown-menu-s1">
                   <div class="dropdown-head"><span class="sub-title nk-dropdown-title">Notifications</span><a href="#">Mark All as Read</a></div>
                   <div class="dropdown-body">
-                     <div class="nk-notification">
-                        <div class="nk-notification-item dropdown-inner">
-                           <div class="nk-notification-icon"><em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em></div>
-                           <div class="nk-notification-content">
-                              <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                              <div class="nk-notification-time">2 hrs ago</div>
-                           </div>
-                        </div>
-                        <div class="nk-notification-item dropdown-inner">
-                           <div class="nk-notification-icon"><em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em></div>
-                           <div class="nk-notification-content">
-                              <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                              <div class="nk-notification-time">2 hrs ago</div>
-                           </div>
-                        </div>
-                        <div class="nk-notification-item dropdown-inner">
-                           <div class="nk-notification-icon"><em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em></div>
-                           <div class="nk-notification-content">
-                              <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                              <div class="nk-notification-time">2 hrs ago</div>
-                           </div>
-                        </div>
-                        <div class="nk-notification-item dropdown-inner">
-                           <div class="nk-notification-icon"><em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em></div>
-                           <div class="nk-notification-content">
-                              <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                              <div class="nk-notification-time">2 hrs ago</div>
-                           </div>
-                        </div>
-                        <div class="nk-notification-item dropdown-inner">
-                           <div class="nk-notification-icon"><em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em></div>
-                           <div class="nk-notification-content">
-                              <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
-                              <div class="nk-notification-time">2 hrs ago</div>
-                           </div>
-                        </div>
-                        <div class="nk-notification-item dropdown-inner">
-                           <div class="nk-notification-icon"><em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em></div>
-                           <div class="nk-notification-content">
-                              <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
-                              <div class="nk-notification-time">2 hrs ago</div>
-                           </div>
-                        </div>
+                     <div class="nk-notification" id="notifications">
                      </div>
                   </div>
                   <div class="dropdown-foot center"><a href="#">View All</a></div>
@@ -664,6 +594,23 @@
    <div class="pmo-st-img"><img src="../../images/landing/promo-investorm.png" alt="Investorm"></div>
    <div class="pmo-st-text">Looking for Advanced <br> HYIP Investment Platform?</div>
 </a>
-<script src="back-office/js/bundlebf47.js?ver=2.9.1"></script><script src="back-office/js/scriptsbf47.js?ver=2.9.1"></script><script src="back-office/js/demo-settingsbf47.js?ver=2.9.1"></script><script src="back-office/js/charts/chart-hotelbf47.js?ver=2.9.1"></script></body>
+<script src="../back-office/js/bundlebf47.js?ver=2.9.1"></script><script src="../back-office/js/scriptsbf47.js?ver=2.9.1"></script><script src="../back-office/js/demo-settingsbf47.js?ver=2.9.1"></script><script src="../back-office/js/charts/chart-hotelbf47.js?ver=2.9.1"></script></body>
 <!-- Mirrored from dashlite.net/demo1/hotel/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Feb 2022 15:01:14 GMT -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script>
+
+setInterval(function () {
+ $.get("/showNotifications/1", function(data, status){
+    let notifications = data;
+    for (let i=0; i<notifications.length; i++)
+    {
+       $('.icon-status').addClass('icon-status-info');
+    $('#notifications').append('<div class="nk-notification-item dropdown-inner"><div class="nk-notification-icon"><em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em></div><div class="nk-notification-content"><div class="nk-notification-text">'+notifications[i].title+'</div><div class="nk-notification-time">'+notifications[i].date+'</div></div></div>');
+    }
+  });
+}, 30000);
+</script>
+
 </html>

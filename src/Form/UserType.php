@@ -20,9 +20,11 @@ class UserType extends AbstractType
         $builder
         
             ->add('nom',TextType::class,[
+                'required'   => false,
                 'attr'=>['placeholder'=>"Entrez votre nom",
                     'class' => 'form-control']])
             ->add('prenom',TextType::class,[
+                'required'   => false,
                 'attr'=>['placeholder'=>"Entrez votre prenom",
                     'class' => 'form-control']])
           /*  ->add('cin',TextType::class,[
@@ -36,9 +38,11 @@ class UserType extends AbstractType
                     'class' => 'form-control']])
                     */
             ->add('mail',TextType::class,[
+                'required'   => false,
                 'attr'=>['placeholder'=>"Entrez votre e-mail",
                     'class' => 'form-control']])
             ->add('mdp',PasswordType::class,[
+                'required'   => false,
                 'attr'=>['placeholder'=>"Entrez votre mot de passe",
                     'class' => 'form-control']])
             ->add('role', HiddenType::class,['attr'=>['value' => '']])

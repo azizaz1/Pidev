@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CalendarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +12,10 @@ use App\Repository\HotelRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ReservationRepository;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Swift_Mailer;
+use Symfony\Component\Mime\Email;
+use App\Entity\Calendar;
 
 class ReservationController extends AbstractController
 {
@@ -26,14 +31,26 @@ class ReservationController extends AbstractController
     /**
      * @Route("/getaway/reservation/list", name="listr")
      */
-    public function list(): Response
+    public function list(ReservationRepository $rep,CalendarRepository $calendar): Response
     {
+        $find=$rep->findAll();
+        $events=$calendar->findByReservations($find);
+        $reser=[];
+        foreach ($events as $res) {
+            $reser[] = [
+                'id' => $res->getId(),
+                'title' => $res->getTitle(),
+                'start' => $res->getStart(),
+                'end' => $res->getEnd(),
+            ];
+        }
+        $data=json_encode($reser);
+
         $rep=$this->getDoctrine()->getRepository(Reservation::class);
         $reservations=$rep->findAll();
-        return $this->render('back-office/reservation/list.html.twig', [
+        return $this->render('back-office/reservation/list.html.twig',[
             'reservation' => $reservations,
         ]);
-
     }
 
     /**
@@ -52,7 +69,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/getaway/reservation/{id}", name="addr")
      */
-    public function add( $id , Request $request , HotelRepository $rep , UserRepository $repository): Response
+    public function add( $id , Request $request , HotelRepository $rep , UserRepository $repository,MailerInterface  $mailer): Response
     {
         $reservation=new Reservation();
         $hotel = $rep->find($id);
@@ -67,6 +84,24 @@ class ReservationController extends AbstractController
         $form=$form->handleRequest($request);
         if ($form->isSubmitted())
         {
+
+
+            $email = (new Email())
+                ->from(('GETAWAY <mohamedaziz.azaiez@esprit.tn>'))
+                ->to('walid.aissaoui@esprit.tn')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('Nouvelle Reservation hotel Ajouté  !!')
+
+                ->html('
+            
+           
+            
+            ');
+
+            $mailer->send($email);
 
             $reservation->setHotel($hotel);
             $reservation->setUser($user);
@@ -106,13 +141,5 @@ class ReservationController extends AbstractController
             'formA' => $form->createView(),
         ]);
     }
-    /**
-     * @Route("/reservation/calendar", name="calendar")
-     */
-    public function calendar(): Response
-    {
-        return $this->render('back-office/reservation/calendar.html.twig', [
-            'controller_name' => 'ReservationController',
-        ]);
-    }
+
 }

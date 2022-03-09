@@ -1,6 +1,9 @@
 {% extends 'base-front.html.twig' %}
 
+{% block image %}   url('/front-office/images/im3.jpg'); {% endblock %}
+ {% block img  %}  Chose Your Car  {% endblock %}
 {% block body %}
+
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('front-office/css/voiture/open-iconic-bootstrap.min.css')}}">
@@ -21,40 +24,6 @@
 
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="#">Getaway</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-menu" aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
-                <span><i class="ion-navicon"></i></span>
-            </button>
-            <div class="collapse navbar-collapse" id="probootstrap-menu">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item" > <a class="nav-link"  href="hotel">Booking</a>
-                        <ul style="display: none">
-                            <li class="nav-item" ><a class="nav-link" href=".............">Booking Hotel</a></li>
-                            <li class="nav-item"><a class="nav-link" href=".............">Booking Car</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="services.html">E-commerce</a></li>
-                    <li class="nav-item"><a class="nav-link" href="travel.html">Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
-    <section class="probootstrap-cover overflow-hidden relative" style="background-image: url('/front-office/images/im3.jpg');" data-stellar-background-ratio="0.5" id="section-home">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row align-items-center text-center">
-                <div class="col-md">
-                    <h2 class="heading mb-2 display-4 font-light probootstrap-animate">Choose Your Car</h2>
-                </div>
-            </div>
-        </div>
-    </section>
     <section class="ftco-section bg-light">
     <div class="container">
         <div class="row text-center mb-5 probootstrap-animate">
@@ -74,7 +43,13 @@
                     <span class="cat">{{ c.modele }} {{ c.couleur }}</span>
                     <p class="price ml-auto">{{ c.prix }}DT <span>/day</span></p>
                 </div>
-                <p class="d-flex mb-0 d-block"><a href="{{ path('addrr' , { 'id' : c.id}) }}" class="btn btn-primary py-2 mr-1">Book now</a> <a href="{{ path('detailv',{ 'id' : c.id}) }}" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                {% if app.session.get('role')  %}
+
+                <p class="d-flex mb-0 d-block"><a href="{{ path('addrr' , { 'id' : c.id}) }}" class="btn btn-primary py-2 mr-1">Book now</a>
+        {% else %}
+            <p class="d-flex mb-0 d-block"><a href="{{ path('loginc')}}" class="btn btn-primary py-2 mr-1">Book now</a>
+                    {% endif %}
+            <a href="{{ path('detailv',{ 'id' : c.id}) }}" class="btn btn-secondary py-2 ml-1">Details</a></p>
             </div>
 
         </div>
@@ -92,7 +67,54 @@
         </div>
     </div>
     </section>
-
+    <footer class="probootstrap_section probootstrap-border-top">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-3">
+                    <h3 class="probootstrap_font-18 mb-3">Quick Links</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="https://free-template.co" target="_blank">Home</a></li>
+                        <li><a href="https://free-template.co" target="_blank">About</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Services</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="probootstrap_font-18 mb-3">Quick Links</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="https://free-template.co" target="_blank">Home</a></li>
+                        <li><a href="https://free-template.co" target="_blank">About</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Services</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="probootstrap_font-18 mb-3">Quick Links</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="https://free-template.co" target="_blank">Home</a></li>
+                        <li><a href="https://free-template.co" target="_blank">About</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Services</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="probootstrap_font-18 mb-3">Quick Links</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="https://free-template.co" target="_blank">Home</a></li>
+                        <li><a href="https://free-template.co" target="_blank">About</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Services</a></li>
+                        <li><a href="https://free-template.co" target="_blank">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row pt-5">
+                <div class="col-md-12 text-center">
+                    <p class="probootstrap_font-14">&copy; 2017. All Rights Reserved. <br> Designed &amp; Developed by <a href="https://probootstrap.com/" target="_blank">ProBootstrap</a><small> (Don't remove credit link on this footer. See <a href="https://probootstrap.com/license/">license</a>)</small></p>
+                    <p class="probootstrap_font-14">Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="{{asset('front-office/js/voiture/jquery.min.js')}}"></script>
     <script src="{{asset('front-office/js/voiture/jquery-migrate-3.0.1.min.js')}}"></script>
     <script src="{{asset('front-office/js/voiture/popper.min.js')}}"></script>
@@ -111,6 +133,5 @@
     <script src="{{asset('front-office/js/voiture/google-map.js')}}"></script>
     <script src="{{asset('front-office/js/voiture/main.js')}}"></script>
 
+{% endblock %}
 
-
-{% endblock %}  

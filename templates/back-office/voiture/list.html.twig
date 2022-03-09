@@ -31,7 +31,14 @@
                     <th scope="col">ID</th>
                     <th scope="col">Matricule</th>
                     <th scope="col">Marque</th>
+                    <th scope="col">Modele</th>
                     <th scope="col">Couleur</th>
+                    <th scope="col">Transmission</th>
+                    <th scope="col">Places</th>
+                    <th scope="col">Bagages</th>
+                    <th scope="col">Carburant</th>
+                    <th scope="col">Killometrage</th>
+                    <th scope="col">Prix</th>
 
                 </tr>
                 </tr>
@@ -40,23 +47,29 @@
                 {% for c in voiture %}
                     <tr>
                         <th scope="row">{{ c.id }}</th>
-                        <td>{{ c.nom }} {{ c.matricule }}  </td>
+                        <td> {{ c.matricule }}  </td>
                         <td>{{ c.marque }}</td>
+                        <td>{{ c.modele }}</td>
                         <td>{{ c.couleur }}</td>
+                        <td>{{ c.transmission }}</td>
+                        <td>{{ c.place }}</td>
+                        <td>{{ c.bagage }}</td>
+                        <td>{{ c.carburant }}</td>
+                        <td>{{ c.killometrage }}</td>
+                        <td>{{ c.prix }}</td>
 
-                        <td><button class="btn btn-primary"><a class="text-light"  href="{{ path( 'updateu' , {'id':c.id} )}}">update</a></button>       <button class="btn btn-danger" ><a class="text-light" href="{{ path( 'deleteu' , {'id':c.id} )}}">delete</a></button></td>
+                        <td><button class="btn btn-primary"><a class="text-light"  href="{{ path( 'updatev' , {'id':c.id} )}}">update</a></button>       <button class="btn btn-danger" ><a class="text-light" href="{{ path( 'deletev' , {'id':c.id} )}}">delete</a></button></td>
 
                     </tr>
 
                 {% endfor %}
                 </tbody>
             </table>
-                        <td><button class="btn btn-primary"><a class="text-light"  href="{{ path( 'addv')}}">ajouter</a></button>
+            <td><button class="btn btn-primary"><a class="text-light"  href="{{ path( 'addv')}}">ajouter</a></button>
 
         </div>
     </div>
     </div>
-
 
 
 

@@ -6,6 +6,7 @@ use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @method Reservation|null find($id, $lockMode = null, $lockVersion = null)
  * @method Reservation|null findOneBy(array $criteria, array $orderBy = null)
@@ -47,4 +48,15 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByReservations(ReservationRepository $rep){
+
+        $reservation=$rep->findAll();
+        $entityManager=$this->getEntityManager();
+        $query=$entityManager->createQuery('SELECT r FROM App\Entity\Reservation r JOIN r.calendar c where r.start=dateb and r.end=datef')
+
+            ->setParameter('dateb',$reservation->date_debut)
+            ->setParameter('datef',$reservation->date_fin);
+        return $query->getResult();
+
+    }
 }

@@ -72,7 +72,7 @@ class Voiture
     private $place;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",unique=true)
      */
     private $matricule;
 

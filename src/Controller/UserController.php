@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Entity\Notifications;
+use App\Repository\NotificationsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use App\Form\UpdateType;
@@ -112,6 +114,7 @@ class UserController extends AbstractController
        $user=new User();
        $form=$this->createForm(UserType::class,$user);
        $form=$form->handleRequest($request);
+       
        if ($form->isSubmitted())
        {
        $user=$form->getData();
@@ -296,6 +299,7 @@ class UserController extends AbstractController
     public function authc(Request $request): Response
     {
         $user=new User();
+        $notifications = new Notifications();
         $form=$this->createForm(UserType::class,$user);
         $form=$form->handleRequest($request);
         if ($form->isSubmitted())
@@ -307,8 +311,19 @@ class UserController extends AbstractController
         $hash_pass = md5($pass);
         $user->setMdp($hash_pass);
 
+        $name = $user->getPrenom().' '.$user->getNom();
+
+        $notifications->setTitle($name.' has registred.');
+        $notifications->setLink('/user/client');
+        $date = date('d/m/Y - H:i');
+        $notifications->setDate($date);
+        $notifications->setToShow(1);
+
         $em=$this->getDoctrine()->getManager();
         $em->persist($user);
+         $em->flush();
+
+         $em->persist($notifications);
          $em->flush();
          return $this->redirectToRoute('test');
          
@@ -449,6 +464,96 @@ class UserController extends AbstractController
 
     
     }
+
+
+
+
+
+    
+     /**
+     * @Route("/enable/{id}", name="enable")
+     */
+    public function enable(MailerInterface $mailer, Request $request,$id): Response
+    {
+        $rep = $this->getDoctrine()->getManager();
+        $user = $rep->getRepository(User::class)->find($id);
+
+        $user->setEnable(NULL);
+        $role = $user->getRole();
+        $rep->flush();
+
+        $email = (new Email())
+        ->from(Address::create('GETAWAY <hayfa.boughoufa@esprit.tn>'))                
+        ->to($user->getMail())
+        ->subject('Your Account Has Been Restored')
+        ->html('
+        <center><h1>Hello '.$user->getPrenom().',</h1></center>
+        <p>Your account has been activated</p>
+  
+        
+        ');
+    $mailer->send($email);
+
+        if($role == 1)
+        return $this->redirectToRoute('listhot');
+        else if($role == 2)
+        return $this->redirectToRoute('listc');
+
+
+    }
+ /**
+     * @Route("/disable/{t}/{id}", name="disable")
+     */
+    public function disable(MailerInterface $mailer, Request $request,$id,$t): Response
+    {
+        $rep = $this->getDoctrine()->getManager();
+        $user = $rep->getRepository(User::class)->find($id);
+        if($t == 't')
+        {
+        $user->setEnable(1);
+        $email = (new Email())
+        ->from(Address::create('GETAWAY <hayfa.boughoufa@esprit.tn>'))                
+        ->to($user->getMail())
+        ->subject('Your Account Has Been Temporarly Disabled')
+        ->html('
+        <center><h1>Hello '.$user->getPrenom().',</h1></center>
+        <p>Your account has been temporarly disabled by your administrator</p>
+  
+        
+        ');
+    $mailer->send($email);
+        }
+
+        else if($t == 'p')
+        {
+        $user->setEnable(2);
+        $email = (new Email())
+        ->from(Address::create('GETAWAY <hayfa.boughoufa@esprit.tn>'))                
+        ->to($user->getMail())
+        ->subject('Your Account Has Been Disabled')
+        ->html('
+        <center><h1>Hello '.$user->getPrenom().',</h1></center>
+        <p>Your account has been disabled by your administrator</p>
+  
+        
+        ');
+    $mailer->send($email);
+        }
+
+        $role = $user->getRole();
+        
+        $rep->flush();
+        if($role == 1)
+        return $this->redirectToRoute('listhot');
+        else if($role == 2)
+        return $this->redirectToRoute('listc');
+
+
+    }
+ 
+
+
+
 
 
 

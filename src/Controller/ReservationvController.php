@@ -11,6 +11,10 @@ use App\Form\VoitureType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\UserRepository;
 use App\Form\ReservationvType;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Swift_Mailer;
+use Symfony\Component\Mime\Email;
+
 
 
 
@@ -78,7 +82,7 @@ class ReservationvController extends AbstractController
     /**
      * @Route("/getaway/reservationv/{id}", name="addrr")
      */
-    public function add( $id , Request $request , VoitureRepository $rep , UserRepository $repository): Response
+    public function add( $id , Request $request , VoitureRepository $rep , UserRepository $repository,MailerInterface  $mailer): Response
     {
         $reservation=new Reservationv();
         $voiture = $rep->find($id);
@@ -90,6 +94,20 @@ class ReservationvController extends AbstractController
         $form=$form->handleRequest($request);
         if ($form->isSubmitted())
         {
+            $reservation = $form->getData();
+
+            $email = (new Email())
+                ->from(('GETAWAY <mohamedaziz.azaiez@esprit.tn>'))
+                ->to('walid.aissaoui@esprit.tn')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('Nouvelle Location voiture Ajouté  !!')
+
+                ->html('
+             ');
+            $mailer->send($email);
 
             $reservation->setVoiture($voiture);
             $reservation->setUser($user);
