@@ -47,7 +47,7 @@
                     <td>{{ c.mail }}</td>
 
                     <td>     
-                    <button class="btn btn-danger" ><a class="text-light" href="{{ path( 'deleteu' , {'id':c.id} )}}">Delete</a></button>
+                    <button class="btn btn-danger" ><a class="text-light" href="{{ path( 'deleteu' , {'id':c.id} )}}">Supprimer</a></button>
                     {% if c.enable == NULL %}
                     <button class="btn btn-warning" ><a class="text-light" href="{{ path( 'disable' , {'t': 'p','id':c.id} )}}">Désactiver</a></button>
                     <button class="btn btn-secondary" ><a class="text-light" href="{{ path( 'disable' , {'t': 't', 'id':c.id} )}}">Désactiver Temporairement</a></button>

@@ -94,9 +94,9 @@ class UserController extends AbstractController
 
 
 /**
-    * @Route("/user/delete/{id}", name="deleteu")
+    * @Route("/user/deletehot/{id}", name="deletehot")
     */
-    public function delete($id): Response
+    public function deletehot($id): Response
     {
         $rep = $this->getDoctrine()->getRepository(User::class);
         $em = $this->getDoctrine()->getManager();
@@ -104,6 +104,22 @@ class UserController extends AbstractController
         $em->remove($user);
         $em->flush();
         return $this->redirectToRoute('listhot');
+    
+    }
+
+
+
+    /**
+    * @Route("/user/deleteu/{id}", name="deleteu")
+    */
+    public function deleteu($id): Response
+    {
+        $rep = $this->getDoctrine()->getRepository(User::class);
+        $em = $this->getDoctrine()->getManager();
+        $user = $rep->find($id);
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('listc');
     
     }
      /**
