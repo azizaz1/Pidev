@@ -98,8 +98,6 @@ class HotelController extends AbstractController
             $em=$this->getDoctrine()->getManager();
             $em->persist($hotel);
             $em->flush();
-
-            
             return $this->redirectToRoute('listh');
 
         }
