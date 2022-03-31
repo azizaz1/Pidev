@@ -17,9 +17,13 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use PHPMailer\PHPMailer\PHPMailer;
 use App\Notifications\NouveauPublicationNotification;
+
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Swift_Mailer;
+use Symfony\Component\Mime\Email;
 use Swift_SmtpTransport;
 use Swift_Message;
-use Swift_Mailer;
+
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPaginationInterface ;
 /**
@@ -88,7 +92,7 @@ class PublicationController extends AbstractController
     /**
      * @Route("/new", name="publication_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $userrepo): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,UserRepository $userrepo,MailerInterface  $mailer): Response
     {
         $user = new User();
 
@@ -98,6 +102,21 @@ class PublicationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $email = (new Email())
+                ->from(('GETAWAY <mohamedaziz.azaiez@esprit.tn>'))
+                ->to('walid.aissaoui@esprit.tn')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('Nouvelle Publication  Ajouté  !!')
+
+                ->html('
+            
+           
+            
+            ');
+            $mailer->send($email);
             $uploadedFile = $form['image']->getData();
             $filename = md5(uniqid()).'.'.$uploadedFile->guessExtension();
             $uploadedFile->move($this->getParameter('upload_directory'),$filename);
@@ -106,7 +125,7 @@ class PublicationController extends AbstractController
             $entityManager->persist($publication);
             $entityManager->flush();
 
-            $this->notify_creation->notify();
+
             return $this->redirectToRoute('pubs', [], Response::HTTP_SEE_OTHER);
         }
 

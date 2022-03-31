@@ -14,8 +14,7 @@ use App\Form\ReservationvType;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Swift_Mailer;
 use Symfony\Component\Mime\Email;
-
-
+use function mysql_xdevapi\getSession;
 
 
 class ReservationvController extends AbstractController
@@ -86,7 +85,7 @@ class ReservationvController extends AbstractController
     {
         $reservation=new Reservationv();
         $voiture = $rep->find($id);
-        $user = $repository->find(35);
+        $user = $repository->find(getSession()->generateUUID());
         $nbjr = abs(strtotime($request->get('datefin')) - strtotime($request->get('datedebut')));
         //$nbjr= $request->get('datefin') - $request->get('datedebut');
         //dump($nbjr);
